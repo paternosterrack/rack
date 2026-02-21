@@ -1,0 +1,58 @@
+{
+  "version": "1",
+  "skills": [
+    {
+      "id": "skill.lint",
+      "version": "0.1.0",
+      "summary": "Run standard linting for Rust projects using fmt+clippy",
+      "agents": ["codex", "claude", "openclaw"],
+      "hooks": [
+        {
+          "agent": "codex",
+          "event": "pre-commit",
+          "run": "cargo fmt --all --check && cargo clippy --all-targets --all-features -- -D warnings"
+        }
+      ],
+      "subagents": [
+        { "name": "lint-bot", "purpose": "Runs rustfmt and clippy before merge" }
+      ]
+    },
+    {
+      "id": "skill.test-runner",
+      "version": "0.1.0",
+      "summary": "Run integration tests and report machine-readable output",
+      "agents": ["codex", "claude"],
+      "hooks": [
+        {
+          "agent": "codex",
+          "event": "pre-push",
+          "run": "cargo test --all -- --nocapture"
+        },
+        {
+          "agent": "claude",
+          "event": "on-demand",
+          "run": "cargo test --all"
+        }
+      ],
+      "subagents": [
+        { "name": "test-bot", "purpose": "Executes integration tests and summarizes failures" }
+      ]
+    },
+    {
+      "id": "skill.git-sync",
+      "version": "0.1.0",
+      "summary": "Sync official remotes using git and validate index freshness",
+      "agents": ["openclaw", "codex"],
+      "hooks": [
+        {
+          "agent": "openclaw",
+          "event": "scheduled",
+          "run": "git fetch --all --prune"
+        }
+      ],
+      "subagents": [
+        { "name": "sync-bot", "purpose": "Keeps remotes current and reports drift" }
+      ]
+    }
+  ]
+}
