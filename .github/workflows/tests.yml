@@ -22,7 +22,8 @@ jobs:
           import json
           from pathlib import Path
 
-          p = Path('.pater/marketplace.json')
+          root = Path('.')
+          p = root / '.pater/marketplace.json'
           data = json.loads(p.read_text(encoding='utf-8'))
           plugins = data.get('plugins', [])
           assert isinstance(plugins, list), 'plugins must be an array'
@@ -40,7 +41,18 @@ jobs:
           if dupes:
             raise SystemExit(f'duplicate plugin names found: {sorted(dupes)}')
 
-          print(f'OK: {len(plugins)} plugins, no duplicates')
+          missing_local = []
+          for x in plugins:
+            src = x.get('source', '')
+            if isinstance(src, str) and src.startswith('./'):
+              target = root / src[2:]
+              if not target.exists():
+                missing_local.append((x.get('name'), src))
+
+          if missing_local:
+            raise SystemExit(f'missing local plugin sources: {missing_local[:10]}')
+
+          print(f'OK: {len(plugins)} plugins, no duplicates, local sources valid')
           PY
 
       - name: validate signature/public key format
@@ -65,4 +77,45 @@ jobs:
             raise SystemExit('trusted-pubkey.hex must be 64 hex chars')
 
           print('OK: signature and pubkey format valid')
+          PY
+
+      - name: verify signature against marketplace.json
+        run: |
+          python3 - <<'PY'
+          import binascii
+          import subprocess
+          import tempfile
+          from pathlib import Path
+
+          root = Path('.')
+          msg = root / '.pater/marketplace.json'
+          sig_lines = [l.strip() for l in (root / '.pater/marketplace.sig').read_text().splitlines() if l.strip() and not l.strip().startswith('#')]
+          key_hex = (root / '.pater/trusted-pubkey.hex').read_text().strip()
+
+          # Ed25519 SPKI DER prefix + raw 32-byte key
+          spki_der = bytes.fromhex('302a300506032b6570032100') + bytes.fromhex(key_hex)
+
+          with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            pub_der = td / 'pub.der'
+            pub_pem = td / 'pub.pem'
+            pub_der.write_bytes(spki_der)
+            subprocess.check_call(['openssl', 'pkey', '-pubin', '-inform', 'DER', '-in', str(pub_der), '-out', str(pub_pem)])
+
+            verified = False
+            for line in sig_lines:
+              sig_bin = td / 'sig.bin'
+              sig_bin.write_bytes(binascii.unhexlify(line))
+              p = subprocess.run([
+                'openssl', 'pkeyutl', '-verify', '-pubin', '-inkey', str(pub_pem),
+                '-rawin', '-in', str(msg), '-sigfile', str(sig_bin)
+              ], capture_output=True)
+              if p.returncode == 0:
+                verified = True
+                break
+
+            if not verified:
+              raise SystemExit('signature verification failed: no signature matched trusted pubkey')
+
+          print('OK: cryptographic signature verifies marketplace.json')
           PY
