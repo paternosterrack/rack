@@ -1,57 +1,329 @@
 {
   "name": "paternoster-rack",
-  "owner": { "name": "Paternoster Rack" },
+  "owner": {
+    "name": "Paternoster Rack"
+  },
+  "metadata": {
+    "description": "Unified curated marketplace aggregated from anthropics/claude-plugins-official, anthropics/skills, and anthropics/claude-code (deduplicated).",
+    "upstreams": [
+      "anthropics/claude-plugins-official",
+      "anthropics/skills",
+      "anthropics/claude-code"
+    ]
+  },
   "plugins": [
     {
-      "name": "lint-tools",
-      "source": "./plugins/lint-tools",
-      "description": "Rust linting and quality checks",
-      "version": "0.1.0",
-      "skills": ["review"],
-      "hooks": [
-        {
-          "agent": "codex",
-          "event": "pre-commit",
-          "run": "cargo fmt --all --check && cargo clippy --all-targets --all-features -- -D warnings"
-        }
-      ],
-      "subagents": [
-        { "name": "lint-bot", "purpose": "Runs rustfmt and clippy before merge" }
-      ]
+      "name": "typescript-lsp",
+      "description": "TypeScript/JavaScript language server for enhanced code intelligence",
+      "source": "./plugins/typescript-lsp",
+      "version": "1.0.0"
     },
     {
-      "name": "test-runner",
-      "source": "./plugins/test-runner",
-      "description": "Integration and unit test execution",
-      "version": "0.1.0",
-      "skills": ["test"],
-      "hooks": [
-        {
-          "agent": "codex",
-          "event": "pre-push",
-          "run": "cargo test --all -- --nocapture"
-        }
-      ],
-      "subagents": [
-        { "name": "test-bot", "purpose": "Executes tests and summarizes failures" }
-      ]
+      "name": "pyright-lsp",
+      "description": "Python language server (Pyright) for type checking and code intelligence",
+      "source": "./plugins/pyright-lsp",
+      "version": "1.0.0"
     },
     {
-      "name": "git-sync",
-      "source": "./plugins/git-sync",
-      "description": "Sync remote sources and validate marketplace freshness",
-      "version": "0.1.0",
-      "skills": ["sync"],
-      "hooks": [
-        {
-          "agent": "openclaw",
-          "event": "scheduled",
-          "run": "git fetch --all --prune"
-        }
-      ],
-      "subagents": [
-        { "name": "sync-bot", "purpose": "Keeps remotes current and reports drift" }
-      ]
+      "name": "gopls-lsp",
+      "description": "Go language server for code intelligence and refactoring",
+      "source": "./plugins/gopls-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "rust-analyzer-lsp",
+      "description": "Rust language server for code intelligence and analysis",
+      "source": "./plugins/rust-analyzer-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "clangd-lsp",
+      "description": "C/C++ language server (clangd) for code intelligence",
+      "source": "./plugins/clangd-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "php-lsp",
+      "description": "PHP language server (Intelephense) for code intelligence",
+      "source": "./plugins/php-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "swift-lsp",
+      "description": "Swift language server (SourceKit-LSP) for code intelligence",
+      "source": "./plugins/swift-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "kotlin-lsp",
+      "description": "Kotlin language server for code intelligence",
+      "source": "./plugins/kotlin-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "csharp-lsp",
+      "description": "C# language server for code intelligence",
+      "source": "./plugins/csharp-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "jdtls-lsp",
+      "description": "Java language server (Eclipse JDT.LS) for code intelligence",
+      "source": "./plugins/jdtls-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "lua-lsp",
+      "description": "Lua language server for code intelligence",
+      "source": "./plugins/lua-lsp",
+      "version": "1.0.0"
+    },
+    {
+      "name": "agent-sdk-dev",
+      "description": "Development kit for working with the Claude Agent SDK",
+      "source": "./plugins/agent-sdk-dev"
+    },
+    {
+      "name": "pr-review-toolkit",
+      "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+      "source": "./plugins/pr-review-toolkit"
+    },
+    {
+      "name": "commit-commands",
+      "description": "Commands for git commit workflows including commit, push, and PR creation",
+      "source": "./plugins/commit-commands"
+    },
+    {
+      "name": "feature-dev",
+      "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "source": "./plugins/feature-dev"
+    },
+    {
+      "name": "security-guidance",
+      "description": "Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code patterns",
+      "source": "./plugins/security-guidance"
+    },
+    {
+      "name": "code-review",
+      "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives",
+      "source": "./plugins/code-review"
+    },
+    {
+      "name": "code-simplifier",
+      "description": "Agent that simplifies and refines code for clarity, consistency, and maintainability while preserving functionality. Focuses on recently modified code.",
+      "source": "./plugins/code-simplifier"
+    },
+    {
+      "name": "explanatory-output-style",
+      "description": "Adds educational insights about implementation choices and codebase patterns (mimics the deprecated Explanatory output style)",
+      "source": "./plugins/explanatory-output-style"
+    },
+    {
+      "name": "learning-output-style",
+      "description": "Interactive learning mode that requests meaningful code contributions at decision points (mimics the unshipped Learning output style)",
+      "source": "./plugins/learning-output-style"
+    },
+    {
+      "name": "frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
+      "source": "./plugins/frontend-design"
+    },
+    {
+      "name": "playground",
+      "description": "Creates interactive HTML playgrounds \u2014 self-contained single-file explorers with visual controls, live preview, and prompt output with copy button. Includes templates for design playgrounds, data explorers, concept maps, and document critique.",
+      "source": "./plugins/playground"
+    },
+    {
+      "name": "ralph-loop",
+      "description": "Interactive self-referential AI loops for iterative development, implementing the Ralph Wiggum technique. Claude works on the same task repeatedly, seeing its previous work, until completion.",
+      "source": "./plugins/ralph-loop"
+    },
+    {
+      "name": "hookify",
+      "description": "Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions. Define rules via simple markdown files.",
+      "source": "./plugins/hookify"
+    },
+    {
+      "name": "plugin-dev",
+      "description": "Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and best practices. AI-assisted plugin creation and validation.",
+      "source": "./plugins/plugin-dev"
+    },
+    {
+      "name": "claude-code-setup",
+      "description": "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MCP servers, and subagents.",
+      "source": "./plugins/claude-code-setup"
+    },
+    {
+      "name": "claude-md-management",
+      "description": "Tools to maintain and improve CLAUDE.md files - audit quality, capture session learnings, and keep project memory current.",
+      "source": "./plugins/claude-md-management"
+    },
+    {
+      "name": "skill-creator",
+      "description": "Create new skills, improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, or benchmark skill performance with variance analysis.",
+      "source": "./plugins/skill-creator"
+    },
+    {
+      "name": "greptile",
+      "description": "AI-powered codebase search and understanding. Query your repositories using natural language to find relevant code, understand dependencies, and get contextual answers about your codebase architecture.",
+      "source": "./plugins/greptile"
+    },
+    {
+      "name": "serena",
+      "description": "Semantic code analysis MCP server providing intelligent code understanding, refactoring suggestions, and codebase navigation through language server protocol integration.",
+      "source": "./plugins/serena"
+    },
+    {
+      "name": "playwright",
+      "description": "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to interact with web pages, take screenshots, fill forms, click elements, and perform automated browser testing workflows.",
+      "source": "./plugins/playwright"
+    },
+    {
+      "name": "github",
+      "description": "Official GitHub MCP server for repository management. Create issues, manage pull requests, review code, search repositories, and interact with GitHub's full API directly from Claude Code.",
+      "source": "./plugins/github"
+    },
+    {
+      "name": "supabase",
+      "description": "Supabase MCP integration for database operations, authentication, storage, and real-time subscriptions. Manage your Supabase projects, run SQL queries, and interact with your backend directly.",
+      "source": "./plugins/supabase"
+    },
+    {
+      "name": "atlassian",
+      "description": "Connect to Atlassian products including Jira and Confluence. Search and create issues, access documentation, manage sprints, and integrate your development workflow with Atlassian's collaboration tools.",
+      "source": "https://github.com/atlassian/atlassian-mcp-server.git"
+    },
+    {
+      "name": "laravel-boost",
+      "description": "Laravel development toolkit MCP server. Provides intelligent assistance for Laravel applications including Artisan commands, Eloquent queries, routing, migrations, and framework-specific code generation.",
+      "source": "./plugins/laravel-boost"
+    },
+    {
+      "name": "figma",
+      "description": "Figma design platform integration. Access design files, extract component information, read design tokens, and translate designs into code. Bridge the gap between design and development workflows.",
+      "source": "https://github.com/figma/mcp-server-guide.git"
+    },
+    {
+      "name": "asana",
+      "description": "Asana project management integration. Create and manage tasks, search projects, update assignments, track progress, and integrate your development workflow with Asana's work management platform.",
+      "source": "./plugins/asana"
+    },
+    {
+      "name": "linear",
+      "description": "Linear issue tracking integration. Create issues, manage projects, update statuses, search across workspaces, and streamline your software development workflow with Linear's modern issue tracker.",
+      "source": "./plugins/linear"
+    },
+    {
+      "name": "Notion",
+      "description": "Notion workspace integration. Search pages, create and update documents, manage databases, and access your team's knowledge base directly from Claude Code for seamless documentation workflows.",
+      "source": "https://github.com/makenotion/claude-code-notion-plugin.git"
+    },
+    {
+      "name": "gitlab",
+      "description": "GitLab DevOps platform integration. Manage repositories, merge requests, CI/CD pipelines, issues, and wikis. Full access to GitLab's comprehensive DevOps lifecycle tools.",
+      "source": "./plugins/gitlab"
+    },
+    {
+      "name": "sentry",
+      "description": "Sentry error monitoring integration. Access error reports, analyze stack traces, search issues by fingerprint, and debug production errors directly from your development environment.",
+      "source": "https://github.com/getsentry/sentry-for-claude.git"
+    },
+    {
+      "name": "slack",
+      "description": "Slack workspace integration. Search messages, access channels, read threads, and stay connected with your team's communications while coding. Find relevant discussions and context quickly.",
+      "source": "./plugins/slack"
+    },
+    {
+      "name": "vercel",
+      "description": "Vercel deployment platform integration. Manage deployments, check build status, access logs, configure domains, and control your frontend infrastructure directly from Claude Code.",
+      "source": "https://github.com/vercel/vercel-deploy-claude-code-plugin.git"
+    },
+    {
+      "name": "stripe",
+      "description": "Stripe development plugin for Claude",
+      "source": "./plugins/stripe"
+    },
+    {
+      "name": "firebase",
+      "description": "Google Firebase MCP integration. Manage Firestore databases, authentication, cloud functions, hosting, and storage. Build and manage your Firebase backend directly from your development workflow.",
+      "source": "./plugins/firebase"
+    },
+    {
+      "name": "context7",
+      "description": "Upstash Context7 MCP server for up-to-date documentation lookup. Pull version-specific documentation and code examples directly from source repositories into your LLM context.",
+      "source": "./plugins/context7"
+    },
+    {
+      "name": "pinecone",
+      "description": "Pinecone vector database integration. Streamline your Pinecone development with powerful tools for managing vector indexes, querying data, and rapid prototyping. Use slash commands like /quickstart to generate AGENTS.md files and initialize Python projects and /query to quickly explore indexes. Access the Pinecone MCP server for creating, describing, upserting and querying indexes with Claude. Perfect for developers building semantic search, RAG applications, recommendation systems, and other vector-based applications with Pinecone.",
+      "source": "https://github.com/pinecone-io/pinecone-claude-code-plugin.git"
+    },
+    {
+      "name": "huggingface-skills",
+      "description": "Build, train, evaluate, and use open source AI models, datasets, and spaces.",
+      "source": "https://github.com/huggingface/skills.git"
+    },
+    {
+      "name": "circleback",
+      "description": "Circleback conversational context integration. Search and access meetings, emails, calendar events, and more.",
+      "source": "https://github.com/circlebackai/claude-code-plugin.git"
+    },
+    {
+      "name": "superpowers",
+      "description": "Superpowers teaches Claude brainstorming, subagent driven development with built in code review, systematic debugging, and red/green TDD. Additionally, it teaches Claude how to author and test new skills.",
+      "source": "https://github.com/obra/superpowers.git"
+    },
+    {
+      "name": "posthog",
+      "description": "Connect Claude Code to your PostHog analytics platform. Query insights, manage feature flags, run A/B experiments, track errors, and analyze LLM costs all through natural language. The plugin provides 10 slash commands for common workflows and full access to PostHog's MCP tools. Ask questions like \"What are my top errors?\" or \"Create a feature flag for 50% of users\" and Claude handles the API calls. Supports OAuth authentication, EU and US cloud regions, and self-hosted instances.",
+      "source": "https://github.com/PostHog/posthog-for-claude.git"
+    },
+    {
+      "name": "coderabbit",
+      "description": "Your code review partner. CodeRabbit provides external validation using a specialized AI architecture and 40+ integrated static analyzers\u2014offering a different perspective that catches bugs, security vulnerabilities, logic errors, and edge cases. Context-aware analysis via AST parsing and codegraph relationships. Automatically incorporates CLAUDE.md and project coding guidelines into reviews. Useful after writing or modifying code, before commits, when implementing complex or security-sensitive logic, or when a second opinion would increase confidence in the changes. Returns specific findings with suggested fixes that can be applied immediately. Free to use.",
+      "source": "https://github.com/coderabbitai/claude-plugin.git"
+    },
+    {
+      "name": "sonatype-guide",
+      "description": "Sonatype Guide MCP server for software supply chain intelligence and dependency security. Analyze dependencies for vulnerabilities, get secure version recommendations, and check component quality metrics.",
+      "source": "https://github.com/sonatype/sonatype-guide-claude-plugin.git"
+    },
+    {
+      "name": "firecrawl",
+      "description": "Web scraping and crawling powered by Firecrawl. Turn any website into clean, LLM-ready markdown or structured data. Scrape single pages, crawl entire sites, search the web, and extract structured information. Includes an AI agent for autonomous multi-source data gathering - just describe what you need and it finds, navigates, and extracts automatically.",
+      "source": "https://github.com/firecrawl/firecrawl-claude-plugin.git"
+    },
+    {
+      "name": "qodo-skills",
+      "description": "Qodo Skills provides a curated library of reusable AI agent capabilities that extend Claude's functionality for software development workflows. Each skill is designed to integrate seamlessly into your development process, enabling tasks like code quality checks, automated testing, security scanning, and compliance validation. Skills operate across your entire SDLC\u2014from IDE to CI/CD\u2014ensuring consistent standards and catching issues early.",
+      "source": "https://github.com/qodo-ai/qodo-skills.git"
+    },
+    {
+      "name": "semgrep",
+      "description": "Semgrep catches security vulnerabilities in real-time and guides Claude to write secure code from the start.",
+      "source": "https://github.com/semgrep/mcp-marketplace.git"
+    },
+    {
+      "name": "claude-opus-4-5-migration",
+      "description": "Migrate your code and prompts from Sonnet 4.x and Opus 4.1 to Opus 4.5.",
+      "source": "./plugins/claude-opus-4-5-migration",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ralph-wiggum",
+      "description": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
+      "source": "./plugins/ralph-wiggum",
+      "version": "1.0.0"
+    },
+    {
+      "name": "document-skills",
+      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
+      "source": "./plugins/document-skills"
+    },
+    {
+      "name": "example-skills",
+      "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
+      "source": "./plugins/example-skills"
     }
   ]
 }

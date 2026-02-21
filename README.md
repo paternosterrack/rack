@@ -1,18 +1,22 @@
 # rack
 
-Official **Paternoster Rack** marketplace repository.
+Unified **Paternoster Rack** marketplace, aligned with Claude plugin marketplace structure and aggregated from:
 
-## Layout
+- `anthropics/claude-plugins-official`
+- `anthropics/skills`
+- `anthropics/claude-code`
 
-- `.pater/marketplace.json` — marketplace catalog (Claude-style flow, agent-agnostic schema)
-- `plugins/*/.pater/plugin.json` — plugin manifests
-- `plugins/*/skills/*/SKILL.md` — example skills
+## What this repo contains
 
-## Philosophy
+- `.pater/marketplace.json` — deduplicated unified catalog
+- `plugins/*` — migrated plugin payloads (local where available)
 
-- Marketplace first, plugin install second
-- Multi-source ready (git/local/url)
-- Namespaced plugin model
-- Curated hooks and subagents per plugin
+## Deduplication policy
 
-Consumed by the `pater` CLI.
+If the same plugin name exists in multiple upstream sources, Rack keeps a single entry with this priority:
+
+1. `claude-plugins-official`
+2. `claude-code`
+3. `skills`
+
+This avoids duplicate plugin IDs while preserving broad coverage.
