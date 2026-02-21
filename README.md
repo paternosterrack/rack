@@ -1,22 +1,51 @@
 # rack
 
-Unified **Paternoster Rack** marketplace, aligned with Claude plugin marketplace structure and aggregated from:
+Official **Paternoster Rack** marketplace repository.
 
-- `anthropics/claude-plugins-official`
-- `anthropics/skills`
-- `anthropics/claude-code`
+## Current state
 
-## What this repo contains
+- Unified marketplace catalog in `.pater/marketplace.json`
+- Aggregated from:
+  - `anthropics/claude-plugins-official`
+  - `anthropics/claude-code`
+  - `anthropics/skills`
+- Deduplicated by plugin name (priority order below)
+- Signed marketplace artifact: `.pater/marketplace.sig`
+- Official pubkey reference: `.pater/trusted-pubkey.hex`
 
-- `.pater/marketplace.json` — deduplicated unified catalog
-- `plugins/*` — migrated plugin payloads (local where available)
-
-## Deduplication policy
-
-If the same plugin name exists in multiple upstream sources, Rack keeps a single entry with this priority:
+## Deduplication priority
 
 1. `claude-plugins-official`
 2. `claude-code`
 3. `skills`
 
-This avoids duplicate plugin IDs while preserving broad coverage.
+## Safety model
+
+- Plugins with unclear license provenance are marked:
+  - `distribution: external-reference-only`
+  - `license_status: unknown`
+- `pater` policy can block these by default and allow explicit overrides.
+
+## Scripts
+
+```bash
+# rebuild/merge upstream catalogs (from local upstream snapshots)
+python3 scripts/sync_upstreams.py
+
+# mark unknown-license plugins as external-reference-only
+python3 scripts/mark_unknown_external.py
+
+# license gate audit (non-zero exit if unknown/proprietary remain)
+python3 scripts/license_audit.py
+
+# sign marketplace after updates
+scripts/sign_marketplace.sh /path/to/marketplace_signing_key.pem
+```
+
+## Release flow (minimal)
+
+1. Sync/update marketplace
+2. Run license audit
+3. Review unknown/proprietary results
+4. Sign `.pater/marketplace.json`
+5. Commit + push marketplace + signature
