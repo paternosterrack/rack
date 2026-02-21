@@ -33,3 +33,7 @@ This repo (`rack`) is the marketplace catalog + plugin payload source for `pater
 
 - Avoid large refactors when only catalog/plugin updates are requested.
 - Preserve upstream compatibility conventions where possible.
+
+## License Gate
+
+- Plugin sync/update changes must run `scripts/license_audit.py` before merge.
