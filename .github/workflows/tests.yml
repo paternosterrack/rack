@@ -1,22 +1,68 @@
-name: checks
+name: rack-guardrails
 
 on:
   push:
   pull_request:
 
 jobs:
-  rack-checks:
+  validate-catalog:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: clone pater
-        run: git clone --depth 1 https://github.com/paternosterrack/pater.git ../pater
-      - name: run rack release prep checks (no signing)
+
+      - name: required files exist
         run: |
-          cd ../pater
-          cargo run -- rack sync --rack-dir ../rack
-          cargo run -- rack mark-unknown-external --rack-dir ../rack
-          cargo run -- rack license-audit --rack-dir ../rack || true
-      - name: validate marketplace json exists
-        run: test -f .pater/marketplace.json
+          test -f .pater/marketplace.json
+          test -f .pater/marketplace.sig
+          test -f .pater/trusted-pubkey.hex
+
+      - name: validate marketplace JSON + duplicate plugin names
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path('.pater/marketplace.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          plugins = data.get('plugins', [])
+          assert isinstance(plugins, list), 'plugins must be an array'
+
+          names = [x.get('name') for x in plugins]
+          assert all(isinstance(n, str) and n.strip() for n in names), 'every plugin must have non-empty string name'
+
+          seen = set()
+          dupes = set()
+          for n in names:
+            if n in seen:
+              dupes.add(n)
+            seen.add(n)
+
+          if dupes:
+            raise SystemExit(f'duplicate plugin names found: {sorted(dupes)}')
+
+          print(f'OK: {len(plugins)} plugins, no duplicates')
+          PY
+
+      - name: validate signature/public key format
+        run: |
+          python3 - <<'PY'
+          import string
+          from pathlib import Path
+
+          hexchars = set(string.hexdigits)
+
+          # .pater/marketplace.sig: one or more 64-byte signatures (128 hex chars) allowed, one per line
+          sig_lines = [l.strip() for l in Path('.pater/marketplace.sig').read_text().splitlines() if l.strip() and not l.strip().startswith('#')]
+          if not sig_lines:
+            raise SystemExit('marketplace.sig has no signatures')
+          for i, line in enumerate(sig_lines, 1):
+            if len(line) != 128 or any(c not in hexchars for c in line):
+              raise SystemExit(f'invalid signature format on line {i}')
+
+          # trusted pubkey must be 32-byte hex (64 chars)
+          key = Path('.pater/trusted-pubkey.hex').read_text().strip()
+          if len(key) != 64 or any(c not in hexchars for c in key):
+            raise SystemExit('trusted-pubkey.hex must be 64 hex chars')
+
+          print('OK: signature and pubkey format valid')
+          PY
