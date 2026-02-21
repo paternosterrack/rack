@@ -1,51 +1,56 @@
 # rack
 
-Official **Paternoster Rack** marketplace repository.
+**Paternoster Rack** marketplace repository.
 
-## Current state
+This repo contains the signed marketplace catalog consumed by `pater`.
 
-- Unified marketplace catalog in `.pater/marketplace.json`
-- Aggregated from:
-  - `anthropics/claude-plugins-official`
-  - `anthropics/claude-code`
-  - `anthropics/skills`
-- Deduplicated by plugin name (priority order below)
-- Signed marketplace artifact: `.pater/marketplace.sig`
-- Official pubkey reference: `.pater/trusted-pubkey.hex`
+## For Users
 
-## Deduplication priority
+You usually do **not** use this repo directly.  
+Use the `pater` CLI, which defaults to `paternosterrack/rack`.
 
-1. `claude-plugins-official`
-2. `claude-code`
-3. `skills`
+## For Developers / Maintainers
+
+## What is here
+
+- `.pater/marketplace.json` — unified plugin catalog
+- `.pater/marketplace.sig` — detached signature for catalog
+- `.pater/trusted-pubkey.hex` — official public key reference
+
+## Upstream aggregation priority
+
+1. `anthropics/claude-plugins-official`
+2. `anthropics/claude-code`
+3. `anthropics/skills`
 
 ## Safety model
 
-- Plugins with unclear license provenance are marked:
-  - `distribution: external-reference-only`
-  - `license_status: unknown`
-- `pater` policy can block these by default and allow explicit overrides.
+Unknown-license entries are marked as:
+- `distribution: external-reference-only`
+- `license_status: unknown`
 
-## Scripts
+`pater` policy can block these by default.
+
+## Maintainer scripts
 
 ```bash
-# rebuild/merge upstream catalogs (from local upstream snapshots)
+# sync upstream snapshots into marketplace
 python3 scripts/sync_upstreams.py
 
-# mark unknown-license plugins as external-reference-only
+# mark unknown-license entries as external-reference-only
 python3 scripts/mark_unknown_external.py
 
-# license gate audit (non-zero exit if unknown/proprietary remain)
+# audit license status (non-zero if unknown/proprietary exist)
 python3 scripts/license_audit.py
 
-# sign marketplace after updates
+# sign marketplace.json
 scripts/sign_marketplace.sh /path/to/marketplace_signing_key.pem
 ```
 
-## Release flow (minimal)
+## Minimal release flow
 
-1. Sync/update marketplace
+1. Sync/update catalog
 2. Run license audit
-3. Review unknown/proprietary results
-4. Sign `.pater/marketplace.json`
-5. Commit + push marketplace + signature
+3. Apply safety marking
+4. Sign marketplace
+5. Commit + push
