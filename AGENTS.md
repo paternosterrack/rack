@@ -36,6 +36,6 @@ This repo (`rack`) is the marketplace catalog + plugin payload source for `pater
 
 ## License Gate
 
-- Plugin sync/update changes must run `scripts/license_audit.py` before merge.
-- If adding/updating scripts/commands, add or update tests under `tests/` in the same change.
-- CI tests must pass on every PR/push (`.github/workflows/tests.yml`).
+- Plugin sync/update changes must run `pater rack license-audit --rack-dir ../rack` before merge.
+- If adding/updating commands, add or update tests in `pater/tests/cli.rs` in the same change.
+- CI checks must pass on every PR/push (`.github/workflows/tests.yml`).

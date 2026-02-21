@@ -1,18 +1,22 @@
-name: tests
+name: checks
 
 on:
   push:
   pull_request:
 
 jobs:
-  python-tests:
+  rack-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: script unit tests
-        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
-      - name: license audit snapshot (informational)
-        run: PYTHONDONTWRITEBYTECODE=1 python3 scripts/license_audit.py || true
+      - uses: dtolnay/rust-toolchain@stable
+      - name: clone pater
+        run: git clone --depth 1 https://github.com/paternosterrack/pater.git ../pater
+      - name: run rack release prep checks (no signing)
+        run: |
+          cd ../pater
+          cargo run -- rack sync --rack-dir ../rack
+          cargo run -- rack mark-unknown-external --rack-dir ../rack
+          cargo run -- rack license-audit --rack-dir ../rack || true
+      - name: validate marketplace json exists
+        run: test -f .pater/marketplace.json
