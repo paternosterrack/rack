@@ -166,27 +166,37 @@
     {
       "name": "greptile",
       "description": "AI-powered codebase search and understanding. Query your repositories using natural language to find relevant code, understand dependencies, and get contextual answers about your codebase architecture.",
-      "source": "./plugins/greptile"
+      "source": "./plugins/greptile",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "serena",
       "description": "Semantic code analysis MCP server providing intelligent code understanding, refactoring suggestions, and codebase navigation through language server protocol integration.",
-      "source": "./plugins/serena"
+      "source": "./plugins/serena",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "playwright",
       "description": "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to interact with web pages, take screenshots, fill forms, click elements, and perform automated browser testing workflows.",
-      "source": "./plugins/playwright"
+      "source": "./plugins/playwright",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "github",
       "description": "Official GitHub MCP server for repository management. Create issues, manage pull requests, review code, search repositories, and interact with GitHub's full API directly from Claude Code.",
-      "source": "./plugins/github"
+      "source": "./plugins/github",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "supabase",
       "description": "Supabase MCP integration for database operations, authentication, storage, and real-time subscriptions. Manage your Supabase projects, run SQL queries, and interact with your backend directly.",
-      "source": "./plugins/supabase"
+      "source": "./plugins/supabase",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "atlassian",
@@ -196,32 +206,44 @@
     {
       "name": "laravel-boost",
       "description": "Laravel development toolkit MCP server. Provides intelligent assistance for Laravel applications including Artisan commands, Eloquent queries, routing, migrations, and framework-specific code generation.",
-      "source": "./plugins/laravel-boost"
+      "source": "./plugins/laravel-boost",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "figma",
       "description": "Figma design platform integration. Access design files, extract component information, read design tokens, and translate designs into code. Bridge the gap between design and development workflows.",
-      "source": "https://github.com/figma/mcp-server-guide.git"
+      "source": "https://github.com/figma/mcp-server-guide.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "asana",
       "description": "Asana project management integration. Create and manage tasks, search projects, update assignments, track progress, and integrate your development workflow with Asana's work management platform.",
-      "source": "./plugins/asana"
+      "source": "./plugins/asana",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "linear",
       "description": "Linear issue tracking integration. Create issues, manage projects, update statuses, search across workspaces, and streamline your software development workflow with Linear's modern issue tracker.",
-      "source": "./plugins/linear"
+      "source": "./plugins/linear",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "Notion",
       "description": "Notion workspace integration. Search pages, create and update documents, manage databases, and access your team's knowledge base directly from Claude Code for seamless documentation workflows.",
-      "source": "https://github.com/makenotion/claude-code-notion-plugin.git"
+      "source": "https://github.com/makenotion/claude-code-notion-plugin.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "gitlab",
       "description": "GitLab DevOps platform integration. Manage repositories, merge requests, CI/CD pipelines, issues, and wikis. Full access to GitLab's comprehensive DevOps lifecycle tools.",
-      "source": "./plugins/gitlab"
+      "source": "./plugins/gitlab",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "sentry",
@@ -231,7 +253,9 @@
     {
       "name": "slack",
       "description": "Slack workspace integration. Search messages, access channels, read threads, and stay connected with your team's communications while coding. Find relevant discussions and context quickly.",
-      "source": "./plugins/slack"
+      "source": "./plugins/slack",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "vercel",
@@ -246,12 +270,16 @@
     {
       "name": "firebase",
       "description": "Google Firebase MCP integration. Manage Firestore databases, authentication, cloud functions, hosting, and storage. Build and manage your Firebase backend directly from your development workflow.",
-      "source": "./plugins/firebase"
+      "source": "./plugins/firebase",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "context7",
       "description": "Upstash Context7 MCP server for up-to-date documentation lookup. Pull version-specific documentation and code examples directly from source repositories into your LLM context.",
-      "source": "./plugins/context7"
+      "source": "./plugins/context7",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "pinecone",
@@ -266,7 +294,9 @@
     {
       "name": "circleback",
       "description": "Circleback conversational context integration. Search and access meetings, emails, calendar events, and more.",
-      "source": "https://github.com/circlebackai/claude-code-plugin.git"
+      "source": "https://github.com/circlebackai/claude-code-plugin.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "superpowers",
@@ -276,7 +306,9 @@
     {
       "name": "posthog",
       "description": "Connect Claude Code to your PostHog analytics platform. Query insights, manage feature flags, run A/B experiments, track errors, and analyze LLM costs all through natural language. The plugin provides 10 slash commands for common workflows and full access to PostHog's MCP tools. Ask questions like \"What are my top errors?\" or \"Create a feature flag for 50% of users\" and Claude handles the API calls. Supports OAuth authentication, EU and US cloud regions, and self-hosted instances.",
-      "source": "https://github.com/PostHog/posthog-for-claude.git"
+      "source": "https://github.com/PostHog/posthog-for-claude.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "coderabbit",
@@ -286,12 +318,16 @@
     {
       "name": "sonatype-guide",
       "description": "Sonatype Guide MCP server for software supply chain intelligence and dependency security. Analyze dependencies for vulnerabilities, get secure version recommendations, and check component quality metrics.",
-      "source": "https://github.com/sonatype/sonatype-guide-claude-plugin.git"
+      "source": "https://github.com/sonatype/sonatype-guide-claude-plugin.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "firecrawl",
       "description": "Web scraping and crawling powered by Firecrawl. Turn any website into clean, LLM-ready markdown or structured data. Scrape single pages, crawl entire sites, search the web, and extract structured information. Includes an AI agent for autonomous multi-source data gathering - just describe what you need and it finds, navigates, and extracts automatically.",
-      "source": "https://github.com/firecrawl/firecrawl-claude-plugin.git"
+      "source": "https://github.com/firecrawl/firecrawl-claude-plugin.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "qodo-skills",
@@ -301,29 +337,39 @@
     {
       "name": "semgrep",
       "description": "Semgrep catches security vulnerabilities in real-time and guides Claude to write secure code from the start.",
-      "source": "https://github.com/semgrep/mcp-marketplace.git"
+      "source": "https://github.com/semgrep/mcp-marketplace.git",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "claude-opus-4-5-migration",
       "description": "Migrate your code and prompts from Sonnet 4.x and Opus 4.1 to Opus 4.5.",
       "source": "./plugins/claude-opus-4-5-migration",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "ralph-wiggum",
       "description": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
       "source": "./plugins/ralph-wiggum",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "document-skills",
       "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
-      "source": "./plugins/document-skills"
+      "source": "./plugins/document-skills",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     },
     {
       "name": "example-skills",
       "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
-      "source": "./plugins/example-skills"
+      "source": "./plugins/example-skills",
+      "distribution": "external-reference-only",
+      "license_status": "unknown"
     }
   ]
 }
