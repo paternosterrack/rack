@@ -1,0 +1,57 @@
+{
+  "name": "paternoster-rack",
+  "owner": { "name": "Paternoster Rack" },
+  "plugins": [
+    {
+      "name": "lint-tools",
+      "source": "./plugins/lint-tools",
+      "description": "Rust linting and quality checks",
+      "version": "0.1.0",
+      "skills": ["review"],
+      "hooks": [
+        {
+          "agent": "codex",
+          "event": "pre-commit",
+          "run": "cargo fmt --all --check && cargo clippy --all-targets --all-features -- -D warnings"
+        }
+      ],
+      "subagents": [
+        { "name": "lint-bot", "purpose": "Runs rustfmt and clippy before merge" }
+      ]
+    },
+    {
+      "name": "test-runner",
+      "source": "./plugins/test-runner",
+      "description": "Integration and unit test execution",
+      "version": "0.1.0",
+      "skills": ["test"],
+      "hooks": [
+        {
+          "agent": "codex",
+          "event": "pre-push",
+          "run": "cargo test --all -- --nocapture"
+        }
+      ],
+      "subagents": [
+        { "name": "test-bot", "purpose": "Executes tests and summarizes failures" }
+      ]
+    },
+    {
+      "name": "git-sync",
+      "source": "./plugins/git-sync",
+      "description": "Sync remote sources and validate marketplace freshness",
+      "version": "0.1.0",
+      "skills": ["sync"],
+      "hooks": [
+        {
+          "agent": "openclaw",
+          "event": "scheduled",
+          "run": "git fetch --all --prune"
+        }
+      ],
+      "subagents": [
+        { "name": "sync-bot", "purpose": "Keeps remotes current and reports drift" }
+      ]
+    }
+  ]
+}

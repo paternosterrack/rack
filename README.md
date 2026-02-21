@@ -1,9 +1,18 @@
 # rack
 
-Official Paternoster Rack platform repository.
+Official **Paternoster Rack** marketplace repository.
 
-Contains:
-- `index/skills.json` — curated example skill index
-- `skills/*` — example skill placeholders
+## Layout
 
-This repository is consumed by the `pater` CLI.
+- `.pater/marketplace.json` — marketplace catalog (Claude-style flow, agent-agnostic schema)
+- `plugins/*/.pater/plugin.json` — plugin manifests
+- `plugins/*/skills/*/SKILL.md` — example skills
+
+## Philosophy
+
+- Marketplace first, plugin install second
+- Multi-source ready (git/local/url)
+- Namespaced plugin model
+- Curated hooks and subagents per plugin
+
+Consumed by the `pater` CLI.
